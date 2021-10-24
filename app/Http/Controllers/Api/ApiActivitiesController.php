@@ -39,8 +39,7 @@ class ApiActivitiesController extends ApiController
     /**
      * Get the detail of a given activity.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ActivityResource|\Illuminate\Http\JsonResponse
      */
     public function show(Request $request, $activityId)
@@ -58,8 +57,7 @@ class ApiActivitiesController extends ApiController
     /**
      * Store the activity.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return ActivityResource|\Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -87,9 +85,8 @@ dd($e);
     /**
      * Update the activity.
      *
-     * @param Request $request
-     * @param int $activityId
-     *
+     * @param  Request  $request
+     * @param  int  $activityId
      * @return ActivityResource|\Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $activityId)
@@ -117,8 +114,7 @@ dd($e);
     /**
      * Delete an activity.
      *
-     * @param Request $request
-     *
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, $activityId)

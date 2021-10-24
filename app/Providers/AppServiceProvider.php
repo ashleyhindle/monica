@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Werk365\EtagConditionals\EtagConditionals;
@@ -55,6 +56,10 @@ class AppServiceProvider extends ServiceProvider
             'partials.check', 'App\Http\ViewComposers\InstanceViewComposer'
         );
 
+        Password::defaults(function () {
+            return Password::min(6);
+        });
+
         if (config('database.use_utf8mb4')
             && DBHelper::connection()->getDriverName() == 'mysql'
             && ! DBHelper::testVersion('5.7.7')) {
@@ -81,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
             $url = $request->getRequestUri();
 
             return Cache::rememberForever('etag.'.$url, function () use ($url) {
-                return md5($url);
+                return sha1($url);
             });
         });
     }

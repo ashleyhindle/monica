@@ -64,8 +64,9 @@ class UpdateContactIntroduction extends BaseService
     /**
      * Update the information about how a contact was introduced.
      *
-     * @param array $data
+     * @param  array  $data
      * @return Contact
+     *
      * @throws ValidationException
      */
     public function execute(array $data): Contact
@@ -129,9 +130,8 @@ class UpdateContactIntroduction extends BaseService
     /**
      * Update date information depending on the type of information.
      *
-     * @param array $data
-     * @param Contact $contact
-     *
+     * @param  array  $data
+     * @param  Contact  $contact
      * @return void
      */
     private function manageDate(array $data, Contact $contact): void
@@ -153,8 +153,8 @@ class UpdateContactIntroduction extends BaseService
      * Case where the date is approximate. That means the date is based
      * on the estimated age of the contact.
      *
-     * @param array $data
-     * @param Contact $contact
+     * @param  array  $data
+     * @param  Contact  $contact
      * @return void
      */
     private function approximate(array $data, Contact $contact): void
@@ -166,7 +166,7 @@ class UpdateContactIntroduction extends BaseService
      * Case where we have a year, month and day for the date.
      *
      * @param  array  $data
-     * @param Contact $contact
+     * @param  Contact  $contact
      * @return void
      */
     private function exact(array $data, Contact $contact): void
@@ -184,9 +184,9 @@ class UpdateContactIntroduction extends BaseService
     /**
      * Set a reminder for the given special date, if required.
      *
-     * @param array  $data
-     * @param Contact $contact
-     * @param SpecialDate $specialDate
+     * @param  array  $data
+     * @param  Contact  $contact
+     * @param  SpecialDate  $specialDate
      * @return void
      */
     private function setReminder(array $data, Contact $contact, SpecialDate $specialDate): void
@@ -195,22 +195,20 @@ class UpdateContactIntroduction extends BaseService
             return;
         }
 
-        if ($data['add_reminder']) {
-            $reminder = app(CreateReminder::class)->execute([
-                'account_id' => $data['account_id'],
-                'contact_id' => $data['contact_id'],
-                'initial_date' => DateHelper::getDate($specialDate),
-                'frequency_type' => 'year',
-                'frequency_number' => 1,
-                'title' => trans(
-                    'people.introductions_reminder_title',
-                    ['name' => $contact->first_name]
-                ),
-                'delible' => false,
-            ]);
+        $reminder = app(CreateReminder::class)->execute([
+            'account_id' => $data['account_id'],
+            'contact_id' => $data['contact_id'],
+            'initial_date' => DateHelper::getDate($specialDate),
+            'frequency_type' => 'year',
+            'frequency_number' => 1,
+            'title' => trans(
+                'people.introductions_reminder_title',
+                ['name' => $contact->first_name]
+            ),
+            'delible' => false,
+        ]);
 
-            $contact->first_met_reminder_id = $reminder->id;
-            $contact->save();
-        }
+        $contact->first_met_reminder_id = $reminder->id;
+        $contact->save();
     }
 }
