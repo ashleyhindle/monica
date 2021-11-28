@@ -144,6 +144,7 @@ return [
 
     // Last called
     'last_called' => 'Última ligação: :date',
+    'last_talked_to' => 'Última ligação: {date}',
     'last_called_empty' => 'Última ligação: desconhecido',
     'last_activity_date' => 'Última atividade juntos: :date',
     'last_activity_date_empty' => 'Última atividade juntos: desconhecido',
@@ -286,7 +287,7 @@ return [
     'activities_profile_year_summary_activity_types' => 'Aqui está um detalhamento do tipo de atividades que vocês fizeram juntos no :ano',
     'activities_profile_year_summary' => 'Aqui está o que vocês dois fizeram em :year',
     'activities_profile_number_occurences' => ':value atividade|:value atividades',
-    'activities_list_participants' => 'Participants ({total}):',
+    'activities_list_participants' => 'Participantes ({total}):',
     'activities_list_emotions' => 'Emoções sentidas:',
     'activities_list_date' => 'Aconteceu em',
     'activities_list_category' => 'Categoria:',
