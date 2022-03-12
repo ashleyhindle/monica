@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -45,4 +45,9 @@ return [
     'invitation_link' => 'Pour accepter l’invitation, cliquez sur le lien ci-dessous :',
     'invitation_button' => 'Accepter l’invitation',
     'invitation_expiration' => 'Ce lien expirera dans :count jours.',
+
+    'export_title' => 'Votre export est prêt',
+    'export_description' => 'Vous avez demandé un export de données le :date. Il est maintenant prêt à être téléchargé.',
+    'export_download' => 'Télécharger l’export',
+
 ];

@@ -214,9 +214,9 @@ class ConversationsController extends Controller
         // find out what the date is
         $chosenDate = $request->input('conversationDateRadio');
         if ($chosenDate == 'today') {
-            $date = DateHelper::getDate(now());
+            $date = DateHelper::getDate(now($request->user()->timezone));
         } elseif ($chosenDate == 'yesterday') {
-            $date = DateHelper::getDate(now()->subDay());
+            $date = DateHelper::getDate(now($request->user()->timezone)->subDay());
         } else {
             $date = $request->input('conversationDate');
         }
@@ -235,6 +235,7 @@ class ConversationsController extends Controller
      * @param  Conversation  $conversation
      * @param  string  $date
      * @return bool|string|\Illuminate\Contracts\Validation\Validator
+     * @psalm-return bool|array|string|\Illuminate\Contracts\Validation\Validator
      */
     private function updateMessages(Request $request, Conversation $conversation, string $date)
     {

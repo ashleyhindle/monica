@@ -3,6 +3,7 @@
 namespace App\Models\Contact;
 
 use DateTime;
+use App\Traits\HasUuid;
 use App\Traits\Searchable;
 use Illuminate\Support\Str;
 use App\Helpers\LocaleHelper;
@@ -25,7 +26,10 @@ use IlluminateAgnostic\Arr\Support\Arr;
 use App\Models\Account\ActivityStatistic;
 use App\Models\Relationship\Relationship;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Prunable;
 use App\Models\ModelBindingHasher as Model;
+use LaravelAdorable\Facades\LaravelAdorable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -42,7 +46,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
  */
 class Contact extends Model
 {
-    use Searchable;
+    use Searchable, SoftDeletes, Prunable, HasUuid;
 
     /** @var array<string> */
     protected $dates = [
@@ -86,7 +90,7 @@ class Contact extends Model
         'is_partial',
         'is_starred',
         'avatar_source',
-        'avatar_adorable_url',
+        'avatar_adorable_uuid',
         'avatar_gravatar_url',
         'avatar_default_url',
         'avatar_photo_id',
@@ -639,6 +643,51 @@ class Contact extends Model
     }
 
     /**
+     * Get contacts ordered by user preferences.
+     *
+     * @param  Builder  $query
+     * @return Builder
+     */
+    public function scopeOrderByUserPreference(Builder $query): Builder
+    {
+        switch (Auth::user()->name_order) {
+            case 'firstname_lastname':
+                $query = $query->orderBy('first_name')
+                    ->orderBy('last_name');
+                break;
+            case 'firstname_lastname_nickname':
+                $query = $query->orderBy('first_name')
+                    ->orderBy('last_name')
+                    ->orderBy('nickname');
+                break;
+            case 'firstname_nickname_lastname':
+                $query = $query->orderBy('first_name')
+                    ->orderBy('nickname')
+                    ->orderBy('last_name');
+                break;
+            case 'nickname':
+                $query = $query->orderBy('nickname');
+                break;
+            case 'lastname_firstname':
+                $query = $query->orderBy('last_name')
+                    ->orderby('first_name');
+                break;
+            case 'lastname_firstname_nickname':
+                $query = $query->orderBy('last_name')
+                    ->orderby('first_name')
+                    ->orderby('nickname');
+                break;
+            case 'lastname_nickname_firstname':
+                $query = $query->orderBy('last_name')
+                    ->orderby('nickname')
+                    ->orderby('first_name');
+                break;
+        }
+
+        return $query;
+    }
+
+    /**
      * Mutator first_name.
      * Get the first name of the contact.
      *
@@ -1072,30 +1121,13 @@ class Contact extends Model
      * @param  string|null  $value
      * @return string|null
      */
-    public function getAvatarAdorableUrlAttribute(?string $value): ?string
+    public function getAvatarAdorableDataUrlAttribute(?string $value): ?string
     {
-        if (isset($value) && $value !== '') {
-            return Str::of($value)
-                ->after('https://api.adorable.io/avatars/')
-                ->ltrim('/')
-                ->start(Str::finish(config('monica.adorable_api'), '/'));
+        if (isset($this->avatar_adorable_uuid) && $this->avatar_adorable_uuid !== '') {
+            return LaravelAdorable::get(config('monica.avatar_size'), $this->avatar_adorable_uuid);
         }
 
         return null;
-    }
-
-    /**
-     * Set the adorable avatar URL.
-     *
-     * @param  string|null  $value
-     * @return void
-     */
-    public function setAvatarAdorableUrlAttribute(?string $value)
-    {
-        if (isset($value) && $value !== '') {
-            $value = Str::of($value)->replace(Str::finish(config('monica.adorable_api'), '/'), '');
-        }
-        $this->attributes['avatar_adorable_url'] = $value;
     }
 
     /**
@@ -1114,7 +1146,7 @@ class Contact extends Model
 
         switch ($this->avatar_source) {
             case 'adorable':
-                $avatarURL = $this->avatar_adorable_url;
+                $avatarURL = $this->avatar_adorable_data_url;
                 break;
             case 'gravatar':
                 $avatarURL = $this->avatar_gravatar_url;
@@ -1134,10 +1166,12 @@ class Contact extends Model
     /**
      * Delete avatars files.
      * This does not touch avatar_location or avatar_file_name properties of the contact.
+     *
+     * @param  bool  $force
      */
-    public function deleteAvatars()
+    public function deleteAvatars(bool $force = false)
     {
-        if (! $this->has_avatar || $this->avatar_location == 'external') {
+        if (! $force && (! $this->has_avatar || $this->avatar_location == 'external')) {
             return;
         }
 
@@ -1473,7 +1507,7 @@ class Contact extends Model
         $timestamps = $this->timestamps;
         $this->timestamps = false;
 
-        if ($frequency == 0) {
+        if ($frequency === 0) {
             $this->stay_in_touch_trigger_date = null;
         } else {
             $triggerDate = $triggerDate ?? now();
@@ -1518,5 +1552,27 @@ class Contact extends Model
                 trans('people.archived_contact_readonly'),
             ]);
         }
+    }
+
+    /**
+     * Get the prunable model query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     * @codeCoverageIgnore
+     */
+    public function prunable()
+    {
+        return static::where('deleted_at', '<=', now()->subWeek());
+    }
+
+    /**
+     * Prepare the model for pruning.
+     *
+     * @return void
+     * @codeCoverageIgnore
+     */
+    protected function pruning()
+    {
+        $this->deleteAvatars(true);
     }
 }

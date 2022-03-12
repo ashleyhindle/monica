@@ -124,6 +124,45 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Password strength
+    |--------------------------------------------------------------------------
+    |
+    | You can configure password strength requirements here.
+    | - password_min is the minimum length of the password.
+    | - password_rules are requirements that can be added on the password:
+    |   mixedCase, letters, numbers, symbols, uncompromised.
+    |   See https://laravel.com/docs/8.x/validation#validating-passwords
+    |
+    */
+
+    'password_min' => (int) env('APP_PASSWORD_MIN', 8),
+
+    'password_rules' => env('APP_PASSWORD_RULES', 'mixedCase,letters,numbers,symbols,uncompromised'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Trust proxies
+    |--------------------------------------------------------------------------
+    |
+    | List of trusted proxies.
+    | Example: set it to '*' to allow any proxy.
+    |
+    */
+
+    'trust_proxies' => env('APP_TRUST_PROXIES'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable cloudflare trusted proxies
+    |--------------------------------------------------------------------------
+    |
+    | Enable to trust cloudflare proxies.
+    |
+    */
+    'cloudflare' => (bool) env('APP_TRUSTED_CLOUDFLARE', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

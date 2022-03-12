@@ -11,7 +11,7 @@
         🍿&#8199;{{ $t('people.activity_title') }}
 
         <span class="fr relative btn-title">
-          <a v-if="displayLogActivity == false" v-cy-name="'add-activity-button'" class="btn edit-information" @click="displayLogActivity = true">
+          <a v-if="displayLogActivity === false" v-cy-name="'add-activity-button'" class="btn edit-information" @click="displayLogActivity = true">
             {{ $t('people.activities_add_activity') }}
           </a>
           <a v-else class="btn edit-information" @click="displayLogActivity = false">
@@ -22,7 +22,7 @@
     </div>
 
     <!-- BLANK STATE -->
-    <div v-if="!displayLogActivity && activities.length == 0" class="w-100">
+    <div v-if="!displayLogActivity && activities.length === 0" class="w-100">
       <div v-cy-name="'activities-blank-state'" class="bg-near-white tc pa3 br2 ba b--light-gray">
         <p>{{ $t('people.activities_blank_title', { name: name }) }}</p>
         <a class="pointer" href="" @click.prevent="displayLogActivity = true">
@@ -75,7 +75,7 @@
                 </li>
 
                 <!-- EMOTIONS LIST -->
-                <li v-if="activity.emotions.length != 0" class="di">
+                <li v-if="activity.emotions.length !== 0" class="di">
                   <ul class="di list" :class="[ dirltr ? 'mr3' : 'ml3' ]">
                     <li class="di">
                       {{ $t('people.activities_list_emotions') }}
@@ -97,8 +97,8 @@
               <ul class="list">
                 <li class="di">
                   <a v-cy-name="'edit-activity-button-'+activity.id" href="" class="pointer" @click.prevent="$set(activity, 'edit', true)">{{ $t('app.edit') }}</a>
-                  <a v-show="destroyActivityId != activity.id" v-cy-name="'delete-activity-button-'+activity.id" href="" class="pointer" @click.prevent="showDestroyActivity(activity)">{{ $t('app.delete') }}</a>
-                  <ul v-show="destroyActivityId == activity.id" class="di">
+                  <a v-show="destroyActivityId !== activity.id" v-cy-name="'delete-activity-button-'+activity.id" href="" class="pointer" @click.prevent="showDestroyActivity(activity)">{{ $t('app.delete') }}</a>
+                  <ul v-show="destroyActivityId === activity.id" class="di">
                     <li class="di">
                       <a v-cy-name="'confirm-delete-activity'" class="pointer red" @click.prevent="destroyActivity(activity)">
                         {{ $t('app.delete_confirm') }}
@@ -126,6 +126,9 @@
                          @cancel="$set(activity, 'edit', false); displayLogActivity = false"
         />
       </div>
+      <a v-if="!isLastPage" class="pointer mr1" style="float: right" @click.prevent="getActivities">
+        {{ $t('app.load_more') }}
+      </a>
     </div>
 
     <p v-if="activities.length > 0" class="tc">
@@ -175,12 +178,17 @@ export default {
       displayParticipants: false,
       destroyActivityId: 0,
       errors: [],
+      currentPage: 0,
+      lastPage: null
     };
   },
 
   computed: {
     dirltr() {
-      return this.$root.htmldir == 'ltr';
+      return this.$root.htmldir === 'ltr';
+    },
+    isLastPage () {
+      return this.lastPage === this.currentPage;
     }
   },
 
@@ -199,15 +207,19 @@ export default {
     },
 
     getActivities() {
-      axios.get('api/contacts/' + this.contactId + '/activities')
+      this.currentPage++;
+      axios.get('api/contacts/' + this.contactId + '/activities?page=' + this.currentPage)
         .then(response => {
-          this.activities = response.data.data;
+          this.activities.push(...response.data.data);
+          this.currentPage = response.data.meta.current_page;
+          this.lastPage = response.data.meta.last_page;
         });
     },
 
     updateList(activity) {
       this.displayLogActivity = false;
-      Vue.set(this.activities, this.activities.indexOf(this.activities.find(item => item.id === activity.id)), activity);
+      const index = this.activities.indexOf(this.activities.find(item => item.id === activity.id));
+      Vue.set(this.activities, index >= 0 ? index : this.activities.length, activity);
     },
 
     showDestroyActivity(activity) {
@@ -215,7 +227,7 @@ export default {
     },
 
     destroyActivity(activity) {
-      axios.delete('api/activities/' + activity.id)
+      axios.delete(`activities/${activity.id}`)
         .then(response => {
           this.activities.splice(this.activities.indexOf(activity), 1);
         });

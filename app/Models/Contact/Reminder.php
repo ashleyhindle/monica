@@ -3,6 +3,7 @@
 namespace App\Models\Contact;
 
 use Carbon\Carbon;
+use App\Traits\HasUuid;
 use App\Models\User\User;
 use App\Helpers\DateHelper;
 use App\Models\Account\Account;
@@ -20,6 +21,8 @@ use App\Models\ModelBindingHasherWithContact as Model;
  */
 class Reminder extends Model
 {
+    use HasUuid;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -35,6 +38,7 @@ class Reminder extends Model
     protected $casts = [
         'is_birthday' => 'boolean',
         'delible' => 'boolean',
+        'inactive' => 'boolean',
         'initial_date' => 'date:Y-m-d',
     ];
 
@@ -175,8 +179,8 @@ class Reminder extends Model
         $reminderRules = $this->account->reminderRules()->where('active', 1)->get();
 
         foreach ($reminderRules as $reminderRule) {
-            $datePrior = Carbon::createFromFormat('Y-m-d', $date);
-            $datePrior->subDays($reminderRule->number_of_days_before);
+            $datePrior = Carbon::createFromFormat('Y-m-d', $date)
+                ->subDays($reminderRule->number_of_days_before);
 
             if ($datePrior->lessThanOrEqualTo(now())) {
                 continue;

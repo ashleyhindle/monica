@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -144,7 +144,7 @@ return [
 
     // Last called
     'last_called' => 'Lần gọi gần đây nhất: :date',
-    'last_talked_to' => 'Last called: {date}',
+    'last_talked_to' => 'Lần gọi gần đây nhất: {date}',
     'last_called_empty' => 'Lần gọi gần đây nhất: không rõ',
     'last_activity_date' => 'Lần hoạt động cùng nhau gần đây nhất: :date',
     'last_activity_date_empty' => 'Lần hoạt động cùng nhau gần đây nhất: không rõ',

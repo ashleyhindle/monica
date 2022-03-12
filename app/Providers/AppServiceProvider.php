@@ -15,10 +15,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Validation\Rules\Password;
+use Monicahq\Cloudflare\LaravelCloudflare;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Werk365\EtagConditionals\EtagConditionals;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Monicahq\Cloudflare\Facades\CloudflareProxies;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,7 +59,28 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Password::defaults(function () {
-            return Password::min(6);
+            if (! $this->app->environment('production')) {
+                return Password::min(6);
+            }
+            $rules = Password::min(config('app.password_min'));
+            $config = explode(',', config('app.password_rules'));
+            if (in_array('mixedCase', $config)) {
+                $rules = $rules->mixedCase();
+            }
+            if (in_array('letters', $config)) {
+                $rules = $rules->letters();
+            }
+            if (in_array('numbers', $config)) {
+                $rules = $rules->numbers();
+            }
+            if (in_array('symbols', $config)) {
+                $rules = $rules->symbols();
+            }
+            if (in_array('uncompromised', $config)) {
+                $rules = $rules->uncompromised();
+            }
+
+            return $rules;
         });
 
         if (config('database.use_utf8mb4')
@@ -88,6 +111,10 @@ class AppServiceProvider extends ServiceProvider
             return Cache::rememberForever('etag.'.$url, function () use ($url) {
                 return sha1($url);
             });
+        });
+
+        LaravelCloudflare::getProxiesUsing(function (): array {
+            return config('app.cloudflare') ? CloudflareProxies::load() : [];
         });
     }
 
@@ -205,7 +232,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Services\VCalendar\ImportTask::class => \App\Services\VCalendar\ImportTask::class,
         \App\Services\VCard\ExportVCard::class => \App\Services\VCard\ExportVCard::class,
         \App\Services\VCard\ImportVCard::class => \App\Services\VCard\ImportVCard::class,
-        \App\Services\Account\Settings\ExportAccount::class => \App\Services\Account\Settings\ExportAccount::class,
+        \App\Services\Account\Settings\SqlExportAccount::class => \App\Services\Account\Settings\SqlExportAccount::class,
         \App\Services\Account\Settings\ResetAccount::class => \App\Services\Account\Settings\ResetAccount::class,
         \App\Services\Account\Settings\DestroyAccount::class => \App\Services\Account\Settings\DestroyAccount::class,
         \App\Services\Instance\AuditLog\LogAccountAction::class => \App\Services\Instance\AuditLog\LogAccountAction::class,

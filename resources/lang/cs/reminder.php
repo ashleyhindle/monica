@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -12,6 +12,5 @@ return [
     'type_lunch' => 'Oběd s',
     'type_hangout' => 'Setkání s',
     'type_email' => 'Email',
-    'type_birthday_kid' => 'Popřát k narozeninám dítěti od',
-
+    'type_birthday_kid' => 'Wish happy birthday to the child of',
 ];

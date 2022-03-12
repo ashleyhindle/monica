@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Log;
 use App\Jobs\UpdateLastConsultedDate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
-use Barryvdh\Debugbar\Facade as Debugbar;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use App\Services\User\UpdateViewPreference;
 use Illuminate\Validation\ValidationException;
 use App\Services\Contact\Contact\CreateContact;
@@ -183,7 +183,8 @@ class ContactsController extends Controller
             ->withDefaultGender(auth()->user()->account->default_gender_id)
             ->withFormNameOrder(FormHelper::getNameOrderForForms(auth()->user()))
             ->withFirstName($request->input('first_name'))
-            ->withLastName($request->input('last_name'));
+            ->withLastName($request->input('last_name'))
+            ->withEmail($request->input('email'));
     }
 
     /**
@@ -477,7 +478,7 @@ class ContactsController extends Controller
             'contact_id' => $contact->id,
         ];
 
-        app(DestroyContact::class)->execute($data);
+        DestroyContact::dispatch($data);
 
         return redirect()->route('people.index')
             ->with('success', trans('people.people_delete_success'));

@@ -57,6 +57,9 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
     Route::get('/emotions/primaries/{emotion}/secondaries', 'EmotionController@secondaries');
     Route::get('/emotions/primaries/{emotion}/secondaries/{secondaryEmotion}/emotions', 'EmotionController@emotions');
 
+    Route::post('/me/contact', 'MeController@store');
+    Route::delete('/me/contact', 'MeController@destroy');
+
     Route::name('people.')->group(function () {
         Route::get('/people/notfound', 'ContactsController@missing')->name('missing');
         Route::get('/people/archived', 'ContactsController@archived')->name('archived');
@@ -193,6 +196,7 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
         Route::get('/people/{contact}/activities/contacts', 'Contacts\\ActivitiesController@contacts')->name('activities.contacts');
         Route::get('/people/{contact}/activities/summary', 'Contacts\\ActivitiesController@summary')->name('activities.summary');
         Route::get('/people/{contact}/activities/{year}', 'Contacts\\ActivitiesController@year')->name('activities.year');
+        Route::resource('activities', 'Contacts\\ActivitiesController')->only(['store', 'update', 'destroy']);
 
         // Audit logs
         Route::get('/people/{contact}/auditlogs', 'Contacts\\ContactAuditLogController@index')->name('auditlogs');
@@ -244,8 +248,11 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
             Route::apiResource('settings/personalization/lifeeventtypes', 'Account\\LifeEvent\\LifeEventTypesController', ['except' => ['index']]);
         });
 
-        Route::get('/settings/export', 'SettingsController@export')->name('export');
-        Route::post('/settings/exportToSql', 'SettingsController@exportToSQL')->name('sql');
+        Route::get('/settings/export', 'Settings\\ExportController@index')->name('export.index');
+        Route::post('/settings/exportToSql', 'Settings\\ExportController@storeSQL')->name('export.store.sql');
+        Route::post('/settings/exportToJson', 'Settings\\ExportController@storeJson')->name('export.store.json');
+        Route::post('/settings/export/{uuid}', 'Settings\\ExportController@download')->name('export.download');
+
         Route::get('/settings/import', 'SettingsController@import')->name('import');
         Route::get('/settings/import/report/{importjobid}', 'SettingsController@report')->name('report');
         Route::get('/settings/import/upload', 'SettingsController@upload')->name('upload');

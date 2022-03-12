@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -99,7 +99,7 @@ return [
     'not_in' => ':attribute es inválido.',
     'not_regex' => 'El formato del campo :attribute no es válido.',
     'numeric' => ':attribute debe ser numérico.',
-    'password' => 'The password is incorrect.',
+    'password' => 'La contraseña es incorrecta.',
     'present' => 'El campo :attribute debe estar presente.',
     'regex' => 'El formato de :attribute es inválido.',
     'required' => 'El campo :attribute es obligatorio.',

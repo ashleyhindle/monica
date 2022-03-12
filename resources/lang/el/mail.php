@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -45,4 +45,9 @@ return [
     'invitation_link' => 'Για να αποδεχτείτε την πρόσκληση, πατήστε στον σύνδεσμο παρακάτω:',
     'invitation_button' => 'Αποδοχή πρόσκλησης',
     'invitation_expiration' => 'Ο σύνδεσμος θα λήξει σε :count μέρες.',
+
+    'export_title' => 'Your export is ready',
+    'export_description' => 'You requested a data export on :date. It is now ready to download.',
+    'export_download' => 'Download export',
+
 ];

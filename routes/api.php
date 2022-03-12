@@ -20,8 +20,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         // Contacts
         Route::apiResource('contacts', 'ApiContactController')
             ->names(['index' => 'contacts', 'show' => 'contact']);
-        Route::put('/me/contact/{contact}', 'ApiContactController@setMe');
-        Route::delete('/me/contact', 'ApiContactController@removeMe');
+        Route::post('/me/contact', 'ApiMeController@store');
+        Route::delete('/me/contact', 'ApiMeController@destroy');
 
         // Contacts properties
         Route::put('/contacts/{contact}/work', 'ApiContactController@updateWork');
@@ -90,7 +90,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/contacts/{contact}/activities', 'ApiActivitiesController@activities');
 
         // Reminders
-        Route::apiResource('reminders', 'ApiReminderController');
+        Route::get('reminders/upcoming/{month}', 'ApiReminderController@upcoming');
+        Route::apiResource('reminders', 'ApiReminderController')
+            ->names(['index' => 'reminders']);
         Route::get('/contacts/{contact}/reminders', 'ApiReminderController@reminders');
 
         // Tasks

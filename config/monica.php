@@ -275,14 +275,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default adorable api url
+    | Export size count
     |--------------------------------------------------------------------------
     |
-    | The default adorable api url.
+    | Number of exports available. When the number of exports is reached, the
+    | oldest export will be deleted.
     |
-    | You can host your own version, see https://github.com/itsthatguy/avatars-api-middleware
-    | or https://hub.docker.com/r/aldrio/adorable-avatars.
     */
-    'adorable_api' => env('ADORABLE_API', 'https://api.hello-avatar.com/adorables/'),
+    'export_size' => (int) env('EXPORT_SIZE', 5),
 
 ];

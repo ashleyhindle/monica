@@ -1,6 +1,8 @@
 name: Release
 
 on:
+  pull_request:
+    branches-ignore: ['*']
   push:
     branches:
       - next
@@ -12,7 +14,8 @@ on:
 
 env:
   php-version: '8.0'
-  node-version: 15
+  build-node-version: 16
+  semantic-node-version: 16
 
 
 jobs:
@@ -30,9 +33,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Get all tags
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.semantic-node-version }}
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
@@ -41,9 +49,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
         with:
-          semantic_version: 17.3.7
+          semantic_version: 18
           extra_plugins: |
-            @semantic-release/changelog
+            @semantic-release/changelog@6
             semantic-release-github-pullrequest
 
       - name: New release published
@@ -65,7 +73,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: v${{ needs.semantic.outputs.new_release_version }}
       - name: Download changelog file
@@ -85,7 +93,7 @@ jobs:
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - name: Cache composer files
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ env.php-version }}-${{ hashFiles('**/composer.lock') }}
@@ -96,14 +104,14 @@ jobs:
 
     # Yarn
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.node-version }}
+          node-version: ${{ env.build-node-version }}
       - name: Get yarn cache directory path
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Cache yarn files
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -157,4 +165,3 @@ jobs:
           workflow: Release update
           repo: monicahq/docker
           token: ${{ secrets.DOCKER_GITHUB_TOKEN }}
-          inputs: '{ "release": "v${{ needs.semantic.outputs.new_release_version }}" }'

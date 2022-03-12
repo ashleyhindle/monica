@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -34,11 +34,29 @@ return [
     'me_choose_placeholder' => 'Wähle dich selbst',
 
     'export_title' => 'Exportiere die Daten deines Kontos',
-    'export_be_patient' => 'Klicke die Schaltfläche um den Export zu starten. Der Exportvorgang kann mehrere Minuten dauern – bitte bleib geduldig und klicke die Schaltfläche nicht mehrfach an.',
-    'export_title_sql' => 'Daten als SQL-Datei exportieren',
-    'export_sql_explanation' => 'Der SQL-Export ermöglicht es dir deine Daten in eine eigene Monica Instanz zu importieren. Dies ist nur sinnvoll, wenn du Monica auf deinem eigenen Server betreibst.',
-    'export_sql_cta' => 'Daten als SQL-Datei exportieren',
-    'export_sql_link_instructions' => 'Hinweis: <a href=":url">Lies die Anleitung</a> um mehr über das Importieren in die eigene Instanz zu erfahren.',
+    'export_be_patient' => 'Button klicken um den Export zu starten. Dies kann mehrere Minuten dauern – sei bitte geduldig und klicke nicht mehrfach auf den Button.',
+    'export_title_sql' => 'Nach SQL exportieren',
+    'export_sql_explanation' => 'Der SQL-Export ermöglicht es dir deine Daten in einer eigenen monica-Installation zu importieren. Dies ist nur sinnvoll, wenn du einen eigenen Server besitzt.',
+    'export_sql_cta' => 'SQL exportieren',
+    'export_sql_link_instructions' => 'Hinweis: <a href=":url">lies die Anleitung</a> um mehr über das Importieren in die eigene Installation zu erfahren.',
+    'export_title_json' => 'Nach JSON exportieren',
+    'export_submitted' => 'Ihr Export wurde übermittelt, er wird in wenigen Augenblicken verfügbar sein…',
+    'export_json_explanation' => 'Exportieren Ihrer Daten im JSON-Format für Sicherungszwecke.',
+    'export_json_beta' => 'JSON-Export ist eine Vorschaufunktion. Sag uns, was du davon hältst:',
+    'export_json_cta' => 'Nach JSON exportieren',
+    'export_header_type' => 'Typ',
+    'export_header_timestamp' => 'Erstellungsdatum',
+    'export_header_status' => 'Status',
+    'export_header_actions' => 'Aktionen',
+    'export_last_title' => 'Letzte Exporte',
+    'export_empty_title' => 'Noch keine Exporte',
+    'export_type_json' => 'JSON-Export',
+    'export_type_sql' => 'SQL-Export',
+    'export_status_todo' => 'Übermittelt',
+    'export_status_doing' => 'In Arbeit',
+    'export_status_done' => 'Fertig',
+    'export_status_failed' => 'Fehlgeschlagen',
+    'export_not_done' => 'Download nicht möglich, dieser Export ist noch nicht abgeschlossen.',
 
     'firstname' => 'Vorname',
     'lastname' => 'Nachname',
@@ -59,15 +77,15 @@ return [
     'email_help' => 'Mit dieser Adresse kannst du dich einloggen und dorthin sendet Monica auch deine Erinnerungen.',
     'timezone' => 'Zeitzone',
     'temperature_scale' => 'Temperaturskala',
-    'temperature_scale_fahrenheit' => 'Fahrenheit',
-    'temperature_scale_celsius' => 'Celsius',
+    'temperature_scale_fahrenheit' => 'Fahrenheit (°F)',
+    'temperature_scale_celsius' => 'Celsius (°C)',
     'layout' => 'Ansicht',
     'layout_small' => 'Maximal 1200 Pixel breit',
     'layout_big' => 'Gesamte Breite des Browsers',
     'save' => 'Einstellungen speichern',
     'delete_title' => 'Konto löschen',
     'delete_desc' => 'Möchtest du dein Konto löschen? Dies kann nicht rückgangig gemacht werden und alle deine Daten werden dauerhaft gelöscht. Wenn du ein Abonnement hast, wird es sofort storniert.',
-    'delete_other_desc' => 'Deine Daten in der Hauptdatenbank werden umgehend gelöscht. Wie in unseren Datenschutzrichtlinien beschrieben, führen wir täglich verschlüsselte Sicherungen durch, welche 30 Tage lang aufbewahrt und danach vollständig gelöscht werden. Wir können keine einzelnen Daten vor diesem Zeitraum aus den Backups löschen. Alle deine Daten werden innerhalb von 30 Tagen nach Löschung deines Kontos vollständig gelöscht.',
+    'delete_other_desc' => 'Deine Daten in der Hauptdatenbank werden umgehend gelöscht. Wie in unseren Datenschutzrichtlinien beschrieben, führen wir täglich verschlüsselte Sicherungen durch, welche 30 Tage lang aufbewahrt und danach vollständig gelöscht werden. Wir können keine einzelnen Daten vor diesem Zeitraum aus den Backups löschen. Alle deine Daten werden innerhalb von 31 Tagen nach Löschung deines Kontos vollständig gelöscht.',
     'reset_desc' => 'Möchtest du dein Konto zurücksetzen? Dies entfernt alle deine Kontakte und die zugehörigen Daten. Dein Konto bleibt erhalten.',
     'reset_title' => 'Konto zurücksetzen',
     'reset_cta' => 'Konto zurücksetzen',

@@ -3,7 +3,7 @@
 /**
  * ⚠️ Editing not allowed except for 'en' language.
  *
- * @see https://github.com/monicahq/monica/blob/master/docs/contribute/translate.md for translations.
+ * @see https://github.com/monicahq/monica/blob/main/docs/contribute/translate.md for translations.
  */
 
 return [
@@ -14,7 +14,7 @@ return [
     'for' => 'Para: :name',
     'comment' => 'Comentario: :comment',
     'footer_contact_info' => 'Add, view, complete, and change information about this contact:',
-    'footer_contact_info2' => 'See :name’s profile',
+    'footer_contact_info2' => 'Ver el perfil de :name',
     'footer_contact_info2_link' => 'Ver el perfil de :name: :url',
 
     'notification_subject_line' => 'Tiene un evento próximo',
@@ -45,4 +45,9 @@ return [
     'invitation_link' => 'Para aceptar la invitación haz clic en el siguiente enlace:',
     'invitation_button' => 'Aceptar invitación',
     'invitation_expiration' => 'Este enlace caducará en :count días.',
+
+    'export_title' => 'Your export is ready',
+    'export_description' => 'You requested a data export on :date. It is now ready to download.',
+    'export_download' => 'Download export',
+
 ];
