@@ -11,7 +11,7 @@ return [
     //index
     'people_not_found' => 'Contatto non trovato',
     'people_list_number_kids' => ':count bambino|:count bambini',
-    'people_list_last_updated' => 'Ultimo contatto:',
+    'people_list_last_updated' => 'Consultato l\'ultima volta:',
     'people_list_number_reminders' => ':count promemoria|:count promemoria',
     'people_list_blank_title' => 'Non ci sono contatti nel tuo account',
     'people_list_blank_cta' => 'Aggiungi qualcuno',
@@ -25,7 +25,7 @@ return [
     'people_list_lastactivitydateOldtoNew' => 'Ordina per data di ultima attività, dalla meno recente alla più recente',
     'people_list_filter_tag' => 'Tutti i contatti etichettati con',
     'people_list_clear_filter' => 'Rimuovi filtro',
-    'people_list_contacts_per_tags' => ':count contatto|:conta contatti',
+    'people_list_contacts_per_tags' => ':count contatto|:count contatti',
     'people_list_show_dead' => 'Mostra persone decedute (:count)',
     'people_list_hide_dead' => 'Nascondi persone decedute (:count)',
     'people_search' => 'Cerca i tuoi contatti…',
@@ -42,7 +42,7 @@ return [
     'people_list_account_upgrade_cta' => 'Effettua l\'upgrade ora',
     'people_list_untagged' => 'Mostra contatti senza etichette',
     'people_list_filter_untag' => 'Tutti i contatti senza etichette',
-    'archived_contact_readonly' => 'Il contatto archiviato non è modificabile, sei pregato di disarchiviarlo prima.',
+    'archived_contact_readonly' => 'Il contatto archiviato non è modificabile, sei pregato di de archiviarlo prima.',
 
     // people add
     'people_add_title' => 'Aggiungi una nuova persona',
@@ -144,7 +144,7 @@ return [
 
     // Last called
     'last_called' => 'Ultima chiamata: :date',
-    'last_talked_to' => 'Last called: {date}',
+    'last_talked_to' => 'Ultima chiamata: {date}',
     'last_called_empty' => 'Ultima chiamata: sconosciuta',
     'last_activity_date' => 'Ultima attività insieme: :date',
     'last_activity_date_empty' => 'Ultima attività insieme: sconosciuta',
@@ -228,7 +228,7 @@ return [
     'relationship_form_also_create_contact' => 'Aggiungi questa persona anche come Contatto.',
     'relationship_form_add_description' => 'Ti permetterà di trattare questa persona come ogni altro contatto.',
     'relationship_form_add_no_existing_contact' => 'Al momento non hai contatti che possono essere una relazione :name.',
-    'relationship_delete_confirmation' => 'Rimuovere relazione? Questo cambio è permanente.',
+    'relationship_delete_confirmation' => 'Sei sicuro di voler eliminare questa relazione? L\'eliminazione è permanente.',
     'relationship_unlink_confirmation' => 'Rimuovere questa relazione? Il contatto non sará cancellato – solo la relazione.',
     'relationship_form_add_success' => 'Relazione impostata correttamente.',
     'relationship_form_deletion_success' => 'La relazione è stata eliminata.',
@@ -376,12 +376,12 @@ return [
 
     // Deceased
     'deceased_reminder_title' => 'Anniversario della morte di :name',
-    'deceased_mark_person_deceased' => 'Segna questo come decaduto',
+    'deceased_mark_person_deceased' => 'Segna come deceduto',
     'deceased_know_date' => 'Conosco la data di decesso di questa persona',
     'deceased_add_reminder' => 'Aggiungi un promemoria per questa data',
     'deceased_label' => 'Deceduto/a',
     'deceased_date_label' => 'Data morte',
-    'deceased_label_with_date' => 'Decesso il :date',
+    'deceased_label_with_date' => 'Deceduto/a il :date',
     'deceased_age' => 'Età di decesso',
 
     // Contact information

@@ -266,8 +266,7 @@ class AccountTest extends FeatureTestCase
             'has_access_to_paid_version_for_free' => true,
         ]);
 
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             $account->isSubscribed()
         );
     }
@@ -279,8 +278,7 @@ class AccountTest extends FeatureTestCase
             'has_access_to_paid_version_for_free' => false,
         ]);
 
-        $this->assertEquals(
-            false,
+        $this->assertFalse(
             $account->isSubscribed()
         );
     }
@@ -292,15 +290,14 @@ class AccountTest extends FeatureTestCase
 
         $plan = factory(\Laravel\Cashier\Subscription::class)->create([
             'account_id' => $account->id,
-            'stripe_plan' => 'chandler_5',
+            'stripe_price' => 'chandler_5',
             'stripe_id' => 'sub_C0R444pbxddhW7',
             'name' => 'fakePlan',
         ]);
 
         config(['monica.paid_plan_monthly_friendly_name' => 'fakePlan']);
 
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             $account->isSubscribed()
         );
     }
@@ -312,15 +309,14 @@ class AccountTest extends FeatureTestCase
 
         $plan = factory(\Laravel\Cashier\Subscription::class)->create([
             'account_id' => $account->id,
-            'stripe_plan' => 'chandler_annual',
+            'stripe_price' => 'chandler_annual',
             'stripe_id' => 'sub_C0R444pbxddhW7',
             'name' => 'annualPlan',
         ]);
 
         config(['monica.paid_plan_annual_friendly_name' => 'annualPlan']);
 
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             $account->isSubscribed()
         );
     }
@@ -330,8 +326,7 @@ class AccountTest extends FeatureTestCase
     {
         $account = factory(Account::class)->create();
 
-        $this->assertEquals(
-            false,
+        $this->assertFalse(
             $account->isSubscribed()
         );
     }
@@ -343,7 +338,7 @@ class AccountTest extends FeatureTestCase
 
         $plan = factory(\Laravel\Cashier\Subscription::class)->create([
             'account_id' => $account->id,
-            'stripe_plan' => 'chandler_5',
+            'stripe_price' => 'chandler_5',
             'stripe_id' => 'sub_C0R444pbxddhW7',
             'name' => 'fakePlan',
         ]);
@@ -373,7 +368,7 @@ class AccountTest extends FeatureTestCase
 
         $plan = factory(\Laravel\Cashier\Subscription::class)->create([
             'account_id' => $account->id,
-            'stripe_plan' => 'chandler_5',
+            'stripe_price' => 'chandler_5',
             'stripe_id' => 'sub_C0R444pbxddhW7',
             'name' => 'fakePlan',
         ]);
@@ -398,7 +393,7 @@ class AccountTest extends FeatureTestCase
 
         $plan = factory(\Laravel\Cashier\Subscription::class)->create([
             'account_id' => $account->id,
-            'stripe_plan' => 'chandler_5',
+            'stripe_price' => 'chandler_5',
             'stripe_id' => 'sub_C0R444pbxddhW7',
             'name' => 'fakePlan',
         ]);

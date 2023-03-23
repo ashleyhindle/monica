@@ -120,8 +120,8 @@ There are multiple ways of getting started with Monica:
     - Self-hosted will always be completely free with no strings attached and you will be in complete control.
 
 1. You can deploy straight on a [PaaS platform](https://en.wikipedia.org/wiki/Platform_as_a_service) like:
-   
-    - Platform.sh [![Deploy on Platform.sh](https://platform.sh/images/deploy/deploy-button-lg-blue.svg)](https://console.platform.sh/projects/create-project/?template=https%3A%2F%2Fgithub.com%2Fmonicahq%2Fmonica&amp;utm_campaign=deploy_on_platform&amp;utm_medium=button&amp;utm_source=affiliate_links&amp;utm_content=https%3A%2F%2Fgithub.com%2Fmonicahq%2Fmonica)
+
+    - Platform.sh [![Deploy on Platform.sh](https://platform.sh/images/deploy/deploy-button-lg-blue.svg)](https://console.platform.sh/projects/create-project/?template=https%3A%2F%2Fraw.githubusercontent.com%2Fmonicahq%2Fmonica%2Fmain%2F.platform.app.yaml&amp;utm_campaign=deploy_on_platform&amp;utm_medium=button&amp;utm_source=affiliate_links&amp;utm_content=https%3A%2F%2Fgithub.com%2Fmonicahq%2Fmonica)
 
     - [Heroku](https://heroku.com) [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/monicahq/monica/tree/main)
 
@@ -130,7 +130,7 @@ There are multiple ways of getting started with Monica:
 
 If you want to host Monica yourself, you will need a server with:
 
-- PHP 7.4 or newer
+- PHP 8.1 or newer
 - HTTP server with PHP support (eg: Apache, Nginx, Caddy)
 - Composer
 - MySQL
@@ -295,7 +295,7 @@ You can support the development of Monica [on Patreon](https://www.patreon.com/m
 
 Our team is made of two core members:
 
-- [Regis Freyd (djaiss)](https://github.com/djaiss)
+- [Maazarin (djaiss)](https://github.com/djaiss)
 
 - [Alexis Saettler (asbiin)](https://github.com/asbiin)
 

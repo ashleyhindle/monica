@@ -31,7 +31,7 @@ class ActivityStatisticService
      * the contact.
      *
      * @param  Contact  $contact
-     * @return \Illuminate\Database\Eloquent\Collection<\App\Models\Account\ActivityStatistic>
+     * @return \Illuminate\Database\Eloquent\Collection<array-key, \App\Models\Account\ActivityStatistic>
      */
     public function activitiesPerYearWithContact(Contact $contact)
     {
@@ -108,7 +108,7 @@ class ActivityStatisticService
         });
 
         // calculate how many occurences of unique activity type id
-        $activities = $grouped->map(function ($item, $key) {
+        $activities = $grouped->map(function ($item) {
             return collect($item)->count();
         });
 

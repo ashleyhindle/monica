@@ -61,7 +61,7 @@ class LocaleHelper
 
         if (is_null($countryCode)) {
             $country = CountriesHelper::getCountryFromLocale($locale);
-            $countryCode = $country->cca2;
+            $countryCode = $country->getIsoAlpha2();
         }
 
         return mb_strtoupper($countryCode);
@@ -94,7 +94,7 @@ class LocaleHelper
      */
     public static function getLocaleList()
     {
-        return collect(config('lang-detector.languages'))->map(function ($lang) {
+        return collect(config('lang-detector.languages'))->map(function (string $lang): array {
             return [
                 'lang' => $lang,
                 'name' => self::getLocaleName($lang),

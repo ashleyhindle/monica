@@ -35,7 +35,7 @@
 
       <!-- edit button -->
       <li v-show="contactTags.length > 0" class="di">
-        <a v-show="!editMode" class="pointer" href="" @click.prevent="search = ''; editMode = true">
+        <a v-show="!editMode" class="pointer" href="" @click.prevent="enterEditMode">
           {{ $t('app.edit') }}
         </a>
       </li>
@@ -43,7 +43,8 @@
       <!-- add a new tag -->
       <li v-show="editMode" class="di mb3">
         <div class="relative di mr2">
-          <input v-model="search"
+          <input ref="tags"
+                 v-model="search"
                  type="text"
                  class="di br2 f5 ba b--black-40 pa2 outline-0"
                  :placeholder="$t('people.tag_add_search')"
@@ -66,7 +67,7 @@
           </ul>
         </div>
 
-        <a class="pointer" href="" @click.prevent="editMode = false">
+        <a class="pointer" href="" @click.prevent="search = ''; editMode = false; isOpen = false;">
           {{ $t('app.close') }}
         </a>
       </li>
@@ -76,7 +77,7 @@
         <span class="i mr2">
           {{ $t('people.tag_no_tags') }}
         </span>
-        <a v-show="!editMode" class="pointer" href="" @click.prevent="editMode = true">
+        <a v-show="!editMode" class="pointer" href="" @click.prevent="enterEditMode">
           {{ $t('people.tag_add') }}
         </a>
       </li>
@@ -143,6 +144,11 @@ export default {
         });
     },
 
+    enterEditMode() {
+      this.editMode = true;
+      this.$nextTick(() => this.$refs.tags.focus());
+    },
+
     removeTag(tag) {
       this.contactTags.splice(this.contactTags.indexOf(tag), 1);
       this.store();
@@ -161,7 +167,7 @@ export default {
         });
         this.arrowCounter = -1;
         this.isOpen = false;
-        this.search = null;
+        this.search = '';
         this.store();
       }
     },
@@ -183,11 +189,11 @@ export default {
     onEscape() {
       this.arrowCounter = -1;
       this.isOpen = false;
-      this.search = null;
+      this.search = '';
     },
 
     setResult(result) {
-      this.search = null;
+      this.search = '';
       this.isOpen = false;
       this.contactTags.push(result);
       this.store();

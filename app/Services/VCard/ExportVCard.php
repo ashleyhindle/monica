@@ -3,6 +3,7 @@
 namespace App\Services\VCard;
 
 use Sabre\VObject\Reader;
+use App\Models\Contact\Tag;
 use Illuminate\Support\Str;
 use App\Services\BaseService;
 use App\Models\Contact\Gender;
@@ -196,6 +197,8 @@ class ExportVCard extends BaseService
     /**
      * @param  Contact  $contact
      * @param  VCard  $vcard
+     *
+     * @see https://datatracker.ietf.org/doc/html/rfc6350#section-6.2.5
      */
     private function exportBirthday(Contact $contact, VCard $vcard)
     {
@@ -203,7 +206,7 @@ class ExportVCard extends BaseService
 
         if (! is_null($contact->birthdate)) {
             if ($contact->birthdate->is_year_unknown) {
-                $date = $contact->birthdate->date->format('--m-d');
+                $date = $contact->birthdate->date->format('--md');
             } else {
                 $date = $contact->birthdate->date->format('Ymd');
             }
@@ -298,14 +301,12 @@ class ExportVCard extends BaseService
     private function getContactFieldLabel(LabelInterface $labelProvider): ?array
     {
         $type = null;
+        /** @var \Illuminate\Support\Collection<array-key, \App\Models\Contact\ContactFieldLabel> */
         $labels = $labelProvider->labels()->get();
         if ($labels->count() > 0) {
             $type = [];
-            $type['type'] = $labels->map(function ($label) {
-                /** @var ContactFieldLabel */
-                $cflabel = $label;
-
-                return mb_strtoupper($cflabel->label_i18n) ?: $cflabel->label;
+            $type['type'] = $labels->map(function (ContactFieldLabel $label): string {
+                return mb_strtoupper($label->label_i18n) ?: $label->label;
             })->join(',');
         }
 
@@ -331,7 +332,7 @@ class ExportVCard extends BaseService
         $vcard->remove('CATEGORIES');
 
         if ($contact->tags->count() > 0) {
-            $vcard->CATEGORIES = $contact->tags->map(function ($tag) {
+            $vcard->CATEGORIES = $contact->tags->map(function (Tag $tag): string {
                 return $tag->name;
             })->toArray();
         }

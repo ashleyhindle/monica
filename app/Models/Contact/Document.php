@@ -3,7 +3,6 @@
 namespace App\Models\Contact;
 
 use App\Traits\HasUuid;
-use function Safe\sprintf;
 use App\Helpers\StorageHelper;
 use App\Models\Account\Account;
 use App\Models\ModelBinding as Model;
@@ -25,14 +24,14 @@ class Document extends Model
     /**
      * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var array<string>|bool
      */
     protected $guarded = ['id'];
 
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'number_of_downloads' => 'integer',

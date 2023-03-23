@@ -149,17 +149,7 @@ return [
     |
     */
 
-    'trust_proxies' => env('APP_TRUST_PROXIES'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enable cloudflare trusted proxies
-    |--------------------------------------------------------------------------
-    |
-    | Enable to trust cloudflare proxies.
-    |
-    */
-    'cloudflare' => (bool) env('APP_TRUSTED_CLOUDFLARE', false),
+    'trust_proxies' => env('APP_TRUSTED_PROXIES', env('APP_TRUST_PROXIES')),
 
     /*
     |--------------------------------------------------------------------------
