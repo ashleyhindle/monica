@@ -575,7 +575,7 @@ class ImportVCard extends BaseService
         $contactData = $this->importGender($contactData, $entry);
         $contactData = $this->importBirthday($contactData, $entry);
 
-        if ($contact !== null && $contactData !== $original) {
+        if ($contact !== null || $contactData !== $original) {
             $contact = app(UpdateContact::class)->execute($contactData);
         } else {
             $contact = app(CreateContact::class)->execute($contactData);
